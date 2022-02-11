@@ -15,11 +15,11 @@ def ignored(*exceptions, loglevel=logging.DEBUG):
     try:
         yield
     except exceptions as err:
-        logger.log(level=loglevel, msg=f'Ignored exception {err}')
+        loglevel is None or logger.log(level=loglevel, msg=f'Ignored exception {type(err)}.')
         pass
 
 @parametrized
-def return_on_failure(func, value, *exceptions):
+def return_on_failure(func, value, *exceptions, loglevel=logging.DEBUG):
     """
     Decorator to return a default value in case of
     an (un)specific exception occurs in the decorated function.
@@ -28,5 +28,6 @@ def return_on_failure(func, value, *exceptions):
     def wrapper(*args, **kwargs):
         with ignored(*(exceptions or [BaseException])):
             return func(*args, **kwargs)
+        loglevel is None or logger.log(level=loglevel, msg=f'Encountered exception, {func.__name__} returns the default value: {value}.')
         return value
     return wrapper

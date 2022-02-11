@@ -25,9 +25,9 @@ def autoparse_dates(func, *arguments_names, log_level=logging.DEBUG):
     except ImportError:
         logger.warning("Can't import pandas, pd.Timestamp will not be automatically converted.")
 
-    def _log_and_parse(argument_name, argument_value, parsing_function):
+    def _log_and_parse(argument_name, argument_value, parsing_function, destination_type):
         """A simple wrapper to also add a line of logs"""
-        logger.log(msg=f'Autoparsing argument with name {argument_name} and value {argument_value}.', level=log_level)
+        log_level is None or logger.log(msg=f'Autoparsing argument with name {argument_name} and value {argument_value} to {destination_type}.', level=log_level)
         return parsing_function(argument_value)
 
     @wraps(func)
@@ -39,7 +39,8 @@ def autoparse_dates(func, *arguments_names, log_level=logging.DEBUG):
         kwargs.update({kw: parameters[kw].default for kw in set(parameters) - set(kwargs)})
         kwargs.update({kw: _log_and_parse(argument_name=kw,
                                           argument_value=value,
-                                          parsing_function=parse_date_types[parameters[kw].annotation])
+                                          parsing_function=parse_date_types[parameters[kw].annotation],
+                                          destination_type=parameters[kw].annotation)
                        for kw, value in kwargs.items()
                        if parameters[kw].annotation in parse_date_types and
                        (kw in arguments_names or not arguments_names)})
