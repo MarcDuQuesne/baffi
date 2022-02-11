@@ -14,7 +14,6 @@ def some_function(start: pd.Timestamp, n_threads: int = 3, end: datetime = '2021
     assert type(start) is pd.Timestamp
     assert type(end) is datetime
 
-
 @autoparse_dates('start')
 def some_other_function(start: pd.Timestamp, n_threads: int = 3, end: datetime = '2021-01-05'):
     assert type(start) is pd.Timestamp

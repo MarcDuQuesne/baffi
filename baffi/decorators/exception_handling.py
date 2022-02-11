@@ -8,14 +8,14 @@ from baffi.decorators.core import parametrized
 logger = logging.getLogger(__name__)
 
 @contextmanager
-def ignored(*exceptions, loglevel=None):
+def ignored(*exceptions, loglevel=logging.DEBUG):
     """
     Define a context in which the specified exceptions are ignored.
     """
     try:
         yield
     except exceptions as err:
-        logger.log(level=loglevel, message=f'Ignored exception {err}')
+        logger.log(level=loglevel, msg=f'Ignored exception {err}')
         pass
 
 @parametrized
