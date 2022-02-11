@@ -1,0 +1,6 @@
+*.swp
+**__pycache__
+.pytest_cache
+.env
+*.egg-info
+.vscode
