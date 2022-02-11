@@ -1,7 +1,7 @@
 import pytest
-import pandas as pd # TODO changeme into something simpler, no need for pandas here.
+import pandas as pd  # TODO changeme into something simpler, no need for pandas here.
 
-from baffi.decorators.extensions import constants
+from baffi.decorators.extensions import constants, NonConstantError
 
 @constants
 def this_function_does_not_modify_its_arguments(first_arg: list, second_arg: list[str] = ['1']):
@@ -10,6 +10,16 @@ def this_function_does_not_modify_its_arguments(first_arg: list, second_arg: lis
 
 @constants
 def this_function_modifies_its_arguments(first_arg: pd.DataFrame, second_arg: list[str] = ['1']):
+    second_arg.append(['2'])
+
+
+@constants(to_disk=True)
+def this_function_does_not_modify_its_arguments_fileversion(first_arg: list, second_arg: list[str] = ['1']):
+    pass
+
+
+@constants('second_arg', to_disk=True)
+def this_function_modifies_its_arguments_fileversion(first_arg: pd.DataFrame, second_arg: list[str] = ['1']):
     second_arg.append(['2'])
 
 
@@ -26,7 +36,7 @@ def test_unmodified_parameters_marked_as_costants():
 
 @pytest.mark.unit
 def test_modified_parameters_marked_as_costants():
-    with pytest.raises(RuntimeError) as excinfo:
+    with pytest.raises(NonConstantError) as excinfo:
         this_function_modifies_its_arguments(first_arg=pd.DataFrame.from_dict({'1': ['1']}))
     assert "Parameter second_arg was modified in function this_function_modifies_its_arguments" in str(excinfo.value)
 
@@ -34,3 +44,15 @@ def test_modified_parameters_marked_as_costants():
 @pytest.mark.unit
 def test_rassigned_parameters_marked_as_costants():
     this_function_reassigns_its_arguments(first_arg=pd.DataFrame.from_dict({'1': ['1']}))
+
+
+@pytest.mark.unit
+def test_unmodified_parameters_marked_as_costants_fileversion():
+    this_function_does_not_modify_its_arguments_fileversion(first_arg=pd.DataFrame.from_dict({'1': ['1']}))
+
+
+@pytest.mark.unit
+def test_modified_parameters_marked_as_costants_fileversion():
+    with pytest.raises(NonConstantError) as excinfo:
+        this_function_modifies_its_arguments_fileversion(first_arg=pd.DataFrame.from_dict({'1': ['1']}))
+    assert "Parameter second_arg was modified in function this_function_modifies_its_arguments" in str(excinfo.value)
