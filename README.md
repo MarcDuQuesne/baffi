@@ -5,8 +5,7 @@ A simple collection of python decorators and utils.
 [![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-360/)
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 
-[![Coverage Status](https://coveralls.io/repos/github/MarcDuQuesne/baffi/badge.svg?branch=main)](https://coveralls.io/github/MarcDuQuesne/baffi?branch=main)
-
+[![Coverage Status](https://coveralls.io/repos/github/MarcDuQuesne/baffi/badge.svg)](https://coveralls.io/github/MarcDuQuesne/baffi)
 
 ### Overview
 
@@ -31,7 +30,7 @@ Decorator to return a default value in case of an (un)specific exception occurs 
 Decorator that compares the serialized/unserialized objects being passed as parameters to ensure their value did not change, emulating the const keyword of other languages.
 
 ```
-@constants(to_disk=True)
-def this_function_does_not_modify_its_arguments_fileversion(first_arg: list, second_arg: list[str] = ['1']):
+@constants
+def this_function_does_not_modify_its_arguments(first_arg: list, second_arg: list[str] = ['1']):
     ...
 ```
