@@ -34,7 +34,8 @@ def constants(func, *parameters_to_be_checked, to_disk=False):
         kwargs.update({kw: value for kw, value in zip(args_names, args)})
         kwargs.update({kw: parameters[kw].default for kw in set(parameters) - set(kwargs)})
 
-        before = {key: pkl.dumps(kwargs[key], protocol=pkl.HIGHEST_PROTOCOL) for key in (parameters_to_be_checked or parameters)}
+        before = {key: pkl.dumps(kwargs[key], protocol=pkl.HIGHEST_PROTOCOL)
+                  for key in (parameters_to_be_checked or parameters)}
 
         if to_disk:
             # temp_file = tempfile.NamedTemporaryFile()  # MG this gives permission errors on windows.
@@ -47,15 +48,13 @@ def constants(func, *parameters_to_be_checked, to_disk=False):
         if to_disk:
             before = pkl.load(file=temp_file.open(mode='rb'))
             temp_file.unlink()
-            # temp_file.delete()
+            # temp_file.delete()  # MG tempfile
 
         for key, serialized_value in before.items():
             if serialized_value != pkl.dumps(kwargs[key], protocol=pkl.HIGHEST_PROTOCOL):
-                raise NonConstantError(f"Parameter {key} was modified in function {func.__name__} even if marked as constant using the constants decorator.")
+                raise NonConstantError(f"Parameter {key} was modified in function {func.__name__} even if\
+                                         marked as constant using the constants decorator.")
 
         return result
 
     return wrapper
-
-
-

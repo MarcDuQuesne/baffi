@@ -1,4 +1,3 @@
-from contextlib import contextmanager
 from functools import wraps
 import logging
 import datetime
@@ -8,6 +7,7 @@ from inspect import signature
 from baffi.decorators.core import parametrized
 
 logger = logging.getLogger(__name__)
+
 
 @parametrized
 def autoparse_dates(func, *arguments_names, log_level=logging.DEBUG):
@@ -27,7 +27,9 @@ def autoparse_dates(func, *arguments_names, log_level=logging.DEBUG):
 
     def _log_and_parse(argument_name, argument_value, parsing_function, destination_type):
         """A simple wrapper to also add a line of logs"""
-        log_level is None or logger.log(msg=f'Autoparsing argument with name {argument_name} and value {argument_value} to {destination_type}.', level=log_level)
+        log_level is None or logger.log(
+            level=log_level,
+            msg=f'Autoparsing argument with name {argument_name} and value {argument_value} to {destination_type}.')
         return parsing_function(argument_value)
 
     @wraps(func)

@@ -7,6 +7,7 @@ from baffi.decorators.core import parametrized
 
 logger = logging.getLogger(__name__)
 
+
 @contextmanager
 def ignored(*exceptions, loglevel=logging.DEBUG):
     """
@@ -18,6 +19,7 @@ def ignored(*exceptions, loglevel=logging.DEBUG):
         loglevel is None or logger.log(level=loglevel, msg=f'Ignored exception {type(err)}.')
         pass
 
+
 @parametrized
 def return_on_failure(func, value, *exceptions, loglevel=logging.DEBUG):
     """
@@ -28,6 +30,8 @@ def return_on_failure(func, value, *exceptions, loglevel=logging.DEBUG):
     def wrapper(*args, **kwargs):
         with ignored(*(exceptions or [BaseException])):
             return func(*args, **kwargs)
-        loglevel is None or logger.log(level=loglevel, msg=f'Encountered exception, {func.__name__} returns the default value: {value}.')
+        loglevel is None or logger.log(
+            level=loglevel,
+            msg=f'Encountered exception, {func.__name__} returns the default value: {value}.')
         return value
     return wrapper
