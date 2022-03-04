@@ -34,7 +34,7 @@ def test_return_on_failure_other_exception():
         this_function_fails_too()
 
 @pytest.mark.unit
-def test_return_on_failure():
+def test_another_return_on_failure():
     value = this_function_fails_too_too()
     assert value == 'failed', 'The function does not not return the right value when failing.'
 
