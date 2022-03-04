@@ -44,7 +44,7 @@ jobs:
     - name: unit tests
       run: |
         pip install .[dev]
-        pytest --cov-report term-missing
+        pytest --cov-report term-missing tests
   
     - name: Coveralls
       env:
