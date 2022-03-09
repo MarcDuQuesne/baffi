@@ -34,3 +34,14 @@ Decorator that compares the serialized/unserialized objects being passed as para
 def this_function_does_not_modify_its_arguments(first_arg: list, second_arg: list[str] = ['1']):
     ...
 ```
+
+#### log_wrapper
+Decorator that adds a formatted log line before/after running a function.
+Some special variables are available: `func_name` and `results`.
+It's also possible to add your own variables.
+
+```
+@log_wrapper(pre_format='beginning', post_format='end, result: {result}')
+def this_function_returns_something():
+    ...
+```
