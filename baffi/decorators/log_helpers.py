@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 @parametrized
-def log_results(func,
+def log_wrapper(func,
                 pre_format='',
                 post_format='{func.__name__}: {result}',
                 level=logging.INFO,
