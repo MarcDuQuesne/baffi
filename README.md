@@ -4,8 +4,8 @@ A simple collection of python decorators and utils.
 
 [![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-360/)
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
-
 [![Coverage Status](https://coveralls.io/repos/github/MarcDuQuesne/baffi/badge.svg)](https://coveralls.io/github/MarcDuQuesne/baffi)
+![Open Issues](https://img.shields.io/github/issues-raw/MarcDuQuesne/baffi)
 
 ### Overview
 
