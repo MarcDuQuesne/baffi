@@ -4,7 +4,13 @@ Interesting metaclasses.
 
 
 def apply_to_each_function(*decorators):
+    """
+    Metaclass to apply a decorator to each function in a class.
+    """
     class DecoratingMetaclass(type):
+        """
+        Metaclass to apply a decorator to each function in a class.
+        """
         def __new__(self, class_name, bases, namespace):
             for key, value in list(namespace.items()):
                 for decorator in decorators:
@@ -18,20 +24,3 @@ def apply_to_each_function(*decorators):
             return type.__new__(self, class_name, bases, namespace)
 
     return DecoratingMetaclass
-
-
-if __name__ == "__main__":
-
-    import logging
-
-    logging.basicConfig(level=logging.DEBUG)
-
-    from baffi.decorators.log_helpers import log_wrapper
-
-    class Foo(dict, metaclass=apply_to_each_function(log_wrapper(level=logging.INFO))):
-        def lookup(self, key):
-            return self[key]
-
-    d = Foo()
-    d["3"] = 2
-    d.lookup("3")
