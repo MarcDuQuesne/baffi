@@ -36,12 +36,11 @@ class OverridingFormatter(logging.Formatter):
 logger = logging.getLogger(__name__)
 logger.propagate = False  # Avoids duplicate messages
 handler = logging.StreamHandler(sys.stderr)
-format = (
+handler.setFormatter(OverridingFormatter(fmt=(
     logging.BASIC_FORMAT
-    if logging.root.handlers is None
-    else logging.root.handlers[0].formatter._fmt
-)  # Taking the first one.
-handler.setFormatter(OverridingFormatter(format))
+    if not logging.root.handlers
+    else logging.root.handlers[0].formatter._fmt   # pylint: disable=W0212
+)))
 logger.addHandler(handler)
 
 
@@ -50,8 +49,7 @@ def log_wrapper(
     func,
     pre_format="",
     post_format="{func.__name__}: {result}",
-    # logger=None,
-    format=None,
+    logger=logger,
     level=logging.INFO,
     **wrapper_kwargs
 ):
