@@ -25,14 +25,14 @@ Decorator to return a default value in case of an (un)specific exception occurs 
   @return_on_failure('failed', RuntimeError)
     def this_function_fails():
       ...
-```   
+```
 
 #### constants
 Decorator that compares the serialized/unserialized objects being passed as parameters to ensure their value did not change, emulating the const keyword of other languages.
 
 ```
 @constants
-def this_function_does_not_modify_its_arguments(first_arg: list, second_arg: list[str] = ['1']):
+def this_function_does_not_modify_its_arguments(first_arg: list, second_arg: List[str] = ['1']):
     ...
 ```
 
