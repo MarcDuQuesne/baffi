@@ -1,10 +1,13 @@
-from functools import wraps
+"""
+Decorators for logging purposes.
+"""
+
 import logging
-from inspect import getframeinfo, stack
 import os
 import sys
+from functools import wraps
+from inspect import getframeinfo, stack
 from time import time
-from functools import partial
 
 from baffi.decorators.core import parametrized
 
@@ -70,7 +73,7 @@ def log_wrapper(
         }
 
         start = time()
-        pre_format and logger.log(
+        pre_format and logger.log(  # pylint: disable=W0106
             msg=pre_format.format(**locals(), **wrapper_kwargs, **kwargs),
             level=level,
             extra=extra_args,
@@ -78,7 +81,7 @@ def log_wrapper(
         result = func(*args, **kwargs)
         end = time()
         duration = end - start
-        post_format and logger.log(
+        post_format and logger.log(  # pylint: disable=W0106
             msg=post_format.format(**locals(), **wrapper_kwargs, **kwargs),
             level=level,
             extra=extra_args,
@@ -102,7 +105,7 @@ def exc_pre_post(func, pre=None, post=None, **wrapper_kwargs):
     def wrapper(*args, **kwargs):
         _pre = pre(*args, **kwargs, **wrapper_kwargs) if pre else None
         result = func(*args, **kwargs)
-        post and post(*args, **kwargs, **wrapper_kwargs, pre=_pre)
+        post and post(*args, **kwargs, **wrapper_kwargs, pre=_pre)  # pylint: disable=W0106
         return result
 
     return wrapper

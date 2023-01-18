@@ -5,8 +5,10 @@ Tests for the constants decorator.
 from typing import List
 
 import pandas as pd  # TODO changeme into something simpler, no need for pandas here.
+import pytest
 
-from baffi.decorators.extensions import constants, NonConstantError
+from baffi.decorators.extensions import NonConstantError, constants
+
 
 @constants
 def this_function_does_not_modify_its_arguments(first_arg: list, second_arg: List[str] = ['1']):
@@ -21,7 +23,6 @@ def this_function_modifies_its_arguments(first_arg: pd.DataFrame, second_arg: Li
     Test that the constants decorator raises an error when a parameter is modified.
     """
     second_arg.append(['2'])
-
 
 @constants(to_disk=True)
 def this_function_does_not_modify_its_arguments_fileversion(first_arg: list, second_arg: List[str] = ['1']):

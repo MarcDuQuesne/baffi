@@ -11,7 +11,7 @@ def apply_to_each_function(*decorators):
         """
         Metaclass to apply a decorator to each function in a class.
         """
-        def __new__(self, class_name, bases, namespace):
+        def __new__(cls, class_name, bases, namespace):
             for key, value in list(namespace.items()):
                 for decorator in decorators:
                     if callable(value):
@@ -21,6 +21,6 @@ def apply_to_each_function(*decorators):
                     elif isinstance(value, staticmethod):
                         namespace[key] = staticmethod(decorator(value.__func__))
 
-            return type.__new__(self, class_name, bases, namespace)
+            return type.__new__(cls, class_name, bases, namespace)
 
     return DecoratingMetaclass
