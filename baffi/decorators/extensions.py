@@ -2,13 +2,12 @@
 Decorators to automatize common operations.
 """
 
-from inspect import signature
-from functools import wraps
 import logging
-import pickle as pkl
-# TODO import tempfile  # MG permission errors.
-from pathlib import Path
 import os
+import pickle as pkl
+from functools import wraps
+from inspect import signature
+from pathlib import Path
 
 from baffi.decorators.core import parametrized
 
@@ -16,7 +15,9 @@ logger = logging.getLogger(__name__)
 
 
 class NonConstantError(RuntimeError):
-    pass
+    """
+    Error raised when a constant parameter is modified.
+    """
 
 
 @parametrized
