@@ -1,8 +1,11 @@
-
+"""
+Decorators for the core of the application.
+"""
 from functools import wraps
+from typing import Callable
 
 
-def parametrized(decorator):
+def parametrized(decorator: Callable):
     """
     Decorator meant to be used by other decorators to provide them with optional arguments.
     """

@@ -8,11 +8,11 @@ from typing import Any, Callable
 
 from baffi.decorators.core import parametrized
 
-logger = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 @contextmanager
-def ignored(*exceptions, loglevel: int = logging.DEBUG, logger: logging.Logger = logger):
+def ignored(*exceptions, loglevel: int = logging.DEBUG, logger: logging.Logger = _logger):
     """
     Define a context in which the specified exceptions are ignored.
     """
@@ -23,7 +23,7 @@ def ignored(*exceptions, loglevel: int = logging.DEBUG, logger: logging.Logger =
 
 
 @parametrized
-def return_on_failure(func: Callable, value: Any, *exceptions, loglevel: int = logging.DEBUG, logger: logging.Logger = logger):
+def return_on_failure(func: Callable, value: Any, *exceptions, loglevel: int = logging.DEBUG, logger: logging.Logger = _logger):
     """
     Decorator to return a default value in case of
     an (un)specific exception occurs in the decorated function.
@@ -35,5 +35,5 @@ def return_on_failure(func: Callable, value: Any, *exceptions, loglevel: int = l
         loglevel is None or logger.log(  # pylint: disable=expression-not-assigned
             level=loglevel,
             msg=f'Encountered exception, {func.__name__} returns the default value: {value}.')
-        return value  # pylint: disable=code-unreachable
+        return value
     return wrapper

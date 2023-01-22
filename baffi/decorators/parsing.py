@@ -3,13 +3,13 @@ Decorator to help parsing strings into objects.
 """
 from typing import Mapping
 
-classes: Mapping = {}
+objects: Mapping = {}
 
 
 def register(cls: type) -> type:
     """
-    Decorator for classes to register them in a dictionary.
+    Decorator for objects that registers them in a dictionary.
     """
 
-    classes[cls.__name__.lower()] = cls
+    objects[cls.__name__.lower()] = cls
     return cls
