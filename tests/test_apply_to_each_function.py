@@ -14,12 +14,12 @@ def test_apply_to_each_function():
     """
     Test the apply_to_each_function decorator
     """
-    def return_2(func):
+    def return_2(func):  # pylint: disable=unused-variable
         """
         Dummy decorator for the test
         """
         @wraps(func)
-        def wrapper(*args, **kwargs):  #pylint: disable=unused-argument
+        def wrapper(*args, **kwargs):  # pylint: disable=unused-argument
             return 2
         return wrapper
 

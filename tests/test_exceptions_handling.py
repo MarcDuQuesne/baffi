@@ -1,3 +1,7 @@
+"""
+Test the exception_handling module.
+"""
+
 import pytest
 
 from baffi.decorators.exception_handling import return_on_failure
@@ -9,7 +13,7 @@ def this_function_fails():
     This function fails.
     """
     raise RuntimeError
-    return 'never_reached'
+    return 'never_reached'  # pylint: disable=unreachable
 
 
 @return_on_failure('failed', IndexError)
@@ -18,7 +22,7 @@ def this_function_fails_too():
     This function fails, diffrently than before :).
     """
     raise RuntimeError
-    return 'never_reached'
+    return 'never_reached'  # pylint: disable=unreachable
 
 
 @return_on_failure('failed')
@@ -27,7 +31,8 @@ def this_function_fails_too_too():
     This function fails
     """
     raise RuntimeError
-    return 'never_reached'
+    return 'never_reached'  # pylint: disable=unreachable
+
 
 @return_on_failure('failed')
 def this_function_succedes():
@@ -43,7 +48,8 @@ def test_return_on_failure():
     Test the return_on_failure decorator
     """
     value = this_function_fails()
-    assert value == 'failed', 'The function does not not return the right value when failing.'
+    assert value == 'failed', 'The function does not not return the right value when failing.'  # pylint: disable=unreachable
+
 
 @pytest.mark.unit
 def test_return_on_failure_other_exception():
@@ -53,13 +59,15 @@ def test_return_on_failure_other_exception():
     with pytest.raises(RuntimeError):
         this_function_fails_too()
 
+
 @pytest.mark.unit
 def test_another_return_on_failure():
     """
     Test the return_on_failure decorator
     """
     value = this_function_fails_too_too()
-    assert value == 'failed', 'The function does not not return the right value when failing.'
+    assert value == 'failed', 'The function does not not return the right value when failing.'  # pylint: disable=unreachable
+
 
 @pytest.mark.unit
 def test_return_on_failure_succeeds():
